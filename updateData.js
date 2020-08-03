@@ -7,15 +7,15 @@ async function main() {
     const orgDb = new Excel.Workbook();
     const newDb = new Excel.Workbook();
 
-    // const rowsInOldDbFile = Number(prompt('Number of rows in old db file : ')) + 1;
-    // const columnsInOldDbFile = Number(prompt('Number of columns in old db file : ')) + 1;
-    // const rowsInNewDbFile = Number(prompt('Number of rows in new db file : ')) + 1;
-    // const columnsInNewDbFile = Number(prompt('Number of columns in new db file : ')) + 1;
+    const rowsInOldDbFile = Number(prompt('Number of rows in old db file : ')) + 1;
+    const columnsInOldDbFile = Number(prompt('Number of columns in old db file : ')) + 1;
+    const rowsInNewDbFile = Number(prompt('Number of rows in new db file : ')) + 1;
+    const columnsInNewDbFile = Number(prompt('Number of columns in new db file : ')) + 1;
 
-    const rowsInOldDbFile = 147 + 1;
-    const columnsInOldDbFile = 135 + 1;
-    const rowsInNewDbFile = 5 + 1;
-    const columnsInNewDbFile = 5 + 1;
+    // const rowsInOldDbFile = 147 + 1;
+    // const columnsInOldDbFile = 135 + 1;
+    // const rowsInNewDbFile = 5 + 1;
+    // const columnsInNewDbFile = 5 + 1;
 
     let skuRow;
     let newObj = {};
