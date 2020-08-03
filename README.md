@@ -27,6 +27,9 @@ $ node updateData.js
 **Keywords User**
 
 > Old DB - The excel having the complete DB data
+
 > New DB - The excel having the new db data
+
 > Number of rows - Total number of the rows in the respective excel
+
 > Number of columns - Total numebr of columns in the respective excel
