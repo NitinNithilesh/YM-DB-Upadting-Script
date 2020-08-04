@@ -24,7 +24,7 @@ $ node updateData.js
 - Also copy the excel sheet with the data that has to be updated into the same folder
 - Run the script
 
-**Keywords User**
+**Keywords Used**
 
 > Old DB - The excel having the complete DB data
 
