@@ -1,11 +1,24 @@
-# Merge Changes in the New DB with the Old DB
+# Merge changes in the New DB with the Old DB
 
 > Merge the new changes in the db with the old db
 
-**Packages to Install**
+**NodeJS**
+
+> Download nodejs from https://nodejs.org/en/download/ and setup the node environment
+
+**Setup npm**
+
+> Setup npm after you install node in your local environment
 
 ```shell
 $ npm install
+```
+
+**Packages to Install**
+
+> Install the following packages after setting-up the node environment 
+
+```shell
 $ npm i exceljs
 $ npm i prompt-sync
 ```
