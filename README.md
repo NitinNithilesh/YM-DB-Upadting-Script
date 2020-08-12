@@ -25,7 +25,7 @@ $ node merge.js
 - The excel having the datas to be updated has to be changed into the format specified
 - Run the script
 
-**Keywords User**
+**Keywords Used**
 
 > Old DB - The excel having the complete DB data
 
