@@ -2,15 +2,15 @@ async function main() {
     const Excel = require('exceljs');
     const prompt = require('prompt-sync')();
     const orgDbFile = 'main_db.csv';
-    const newDbFile = 'test_db.csv';
+    const newDbFile = 'changes_db.csv';
     const sheetToRead = 'sheet1';
     const orgDb = new Excel.Workbook();
     const newDb = new Excel.Workbook();
 
-    let rowsInOldDbFile = Number(prompt('Number of rows in old db file : ')) + 1;
-    let columnsInOldDbFile = Number(prompt('Number of columns in old db file : ')) + 1;
-    let rowsInNewDbFile = Number(prompt('Number of rows in new db file : ')) + 1;
-    let columnsInNewDbFile = Number(prompt('Number of columns in new db file : ')) + 1;
+    let rowsInOldDbFile = Number(prompt('Number of rows in main db file : ')) + 1;
+    let columnsInOldDbFile = Number(prompt('Number of columns in main db file : ')) + 1;
+    let rowsInNewDbFile = Number(prompt('Number of rows in changes db file : ')) + 1;
+    let columnsInNewDbFile = Number(prompt('Number of columns in changes db file : ')) + 1;
 
     // let rowsInOldDbFile = 162 + 1;
     // let columnsInOldDbFile = 137 + 1;
