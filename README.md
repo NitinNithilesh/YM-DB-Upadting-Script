@@ -7,21 +7,22 @@
 ```shell
 $ npm install
 $ npm i exceljs
-$ npm i prompt
+$ npm i prompt-sync
 ```
 
 **How to Run**
 
 ```shell
-$ node updateData.js
+$ node merge.js
 ```
 
 **Steps To Be Followed**
 
-- Download the Old DB CSV
-- Take a backup of that file in a safe folder
+- Download the Old DB CSV from Yellow Messenger
+- Take a backup of that file in a safe folder (For backup if anything goes wrong while feeding the input to the script)
 - Copy the downloaded excel in the same folder where the script is present
 - Also copy the excel sheet with the data that has to be updated into the same folder
+- The excel having the datas to be updated has to be changed into the format specified
 - Run the script
 
 **Keywords User**
@@ -33,3 +34,7 @@ $ node updateData.js
 > Number of rows - Total number of the rows in the respective excel
 
 > Number of columns - Total numebr of columns in the respective excel
+
+**More Reference**
+
+> Please refer the file "readme.js" for more details on the internal functions

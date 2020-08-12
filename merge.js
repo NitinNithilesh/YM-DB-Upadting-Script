@@ -1,23 +1,29 @@
 async function main() {
-    const Excel = require('exceljs')();
+    const Excel = require('exceljs');
     const prompt = require('prompt-sync')();
-    const orgDbFile = 'test.csv';
+    const orgDbFile = 'main_db.csv';
     const newDbFile = 'test_db.csv';
     const sheetToRead = 'sheet1';
     const orgDb = new Excel.Workbook();
     const newDb = new Excel.Workbook();
 
-    const rowsInOldDbFile = Number(prompt('Number of rows in old db file : ')) + 1;
-    const columnsInOldDbFile = Number(prompt('Number of columns in old db file : ')) + 1;
-    const rowsInNewDbFile = Number(prompt('Number of rows in new db file : ')) + 1;
-    const columnsInNewDbFile = Number(prompt('Number of columns in new db file : ')) + 1;
+    let rowsInOldDbFile = Number(prompt('Number of rows in old db file : ')) + 1;
+    let columnsInOldDbFile = Number(prompt('Number of columns in old db file : ')) + 1;
+    let rowsInNewDbFile = Number(prompt('Number of rows in new db file : ')) + 1;
+    let columnsInNewDbFile = Number(prompt('Number of columns in new db file : ')) + 1;
 
-    // const rowsInOldDbFile = 147 + 1;
-    // const columnsInOldDbFile = 135 + 1;
-    // const rowsInNewDbFile = 5 + 1;
-    // const columnsInNewDbFile = 5 + 1;
+    // let rowsInOldDbFile = 162 + 1;
+    // let columnsInOldDbFile = 137 + 1;
+    // let rowsInNewDbFile = 17 + 1;
+    // let columnsInNewDbFile = 8 + 1;
 
     let skuRow;
+    let oldDbColumnsArray = [];
+    let oldDbRowsArray = [];
+    let newDbColumnsArray = [];
+    let newDbRowsArray = [];
+    let newDbRowsProductsArray = [];
+    let newDbRowsUserArray = [];
     let newObj = {};
 
     await orgDb.csv.readFile(orgDbFile);
@@ -29,10 +35,85 @@ async function main() {
     await changeEntireNewDatasetIntoLowerCase();
     await changeEntireOldDatasetIntoLowerCase();
 
+    async function oldDbColumns() {
+        for (let i = 1; i < columnsInOldDbFile; i++) {
+            oldDbColumnsArray.push(orgDbWorksheet.getRow(1).getCell(i).value);
+        }
+        return;
+    }
+
+    async function oldDbRows() {
+        for (let i = 1; i < rowsInOldDbFile; i++) {
+            oldDbRowsArray.push(orgDbWorksheet.getRow(i).getCell(1).value);
+        }
+        return;
+    }
+
+    async function newDbColumns() {
+        for (let i = 1; i < columnsInNewDbFile; i++) {
+            newDbColumnsArray.push(newDbWorksheet.getRow(1).getCell(i).value);
+        }
+        return;
+    }
+
+    async function newDbRows() {
+        for (let i = 1; i < rowsInNewDbFile; i++) {
+            newDbRowsArray.push(newDbWorksheet.getRow(i).getCell(1).value);
+            newDbRowsProductsArray.push(newDbWorksheet.getRow(i).getCell(2).value);
+            newDbRowsUserArray.push(newDbWorksheet.getRow(i).getCell(3).value);
+        }
+        return;
+    }
+
     async function changeToLowerCase(value) {
-        value = await value.toString();
-        value = await value.toLowerCase();
-        return value.trim();
+        if (value != null || value != undefined) {
+            value = await value.toString();
+            value = await value.toLowerCase();
+            return value.trim();
+        }
+        return value;
+    }
+
+    async function cleanOldData() {
+        for (let i = 1; i < rowsInOldDbFile; i++) {
+            let row = orgDbWorksheet.getRow(i).getCell(1).value;
+            await changeToLowerCase(row);
+        }
+        await orgDb.csv.writeFile(orgDbFile);
+    }
+
+    async function cleanNewData() {
+        for (let i = 1; i < rowsInNewDbFile; i++) {
+            let row = newDbWorksheet.getRow(i).getCell(1).value;
+            await changeToLowerCase(row);
+        }
+        await newDb.csv.writeFile(newDbFile);
+    }
+
+    async function checkForNewColumns() {
+        for (let i = 0; i < newDbColumnsArray.length; i++) {
+            let index = oldDbColumnsArray.indexOf(newDbColumnsArray[i]);
+            if (index == -1) {
+                orgDbWorksheet.getRow(1).getCell(columnsInOldDbFile).value = newDbColumnsArray[i];
+                columnsInOldDbFile = columnsInOldDbFile + 1;
+            }
+            await orgDb.csv.writeFile(orgDbFile);
+        }
+        return;
+    }
+
+    async function checkForNewRows() {
+        for (let i = 0; i < newDbRowsArray.length; i++) {
+            let index = oldDbRowsArray.indexOf(newDbRowsArray[i]);
+            if (index == -1) {
+                orgDbWorksheet.getRow(rowsInOldDbFile).getCell(1).value = newDbRowsArray[i];
+                orgDbWorksheet.getRow(rowsInOldDbFile).getCell(2).value = newDbRowsProductsArray[i];
+                orgDbWorksheet.getRow(rowsInOldDbFile).getCell(3).value = newDbRowsUserArray[i];
+                rowsInOldDbFile = rowsInOldDbFile + 1;
+            }
+            await orgDb.csv.writeFile(orgDbFile);
+        }
+        return;
     }
 
     async function ifRowAvailable(skuId) {
@@ -69,7 +150,7 @@ async function main() {
                     if (cdColumn == pos.columnValue) {
                         let valueToUpdate = newDbWorksheet.getRow(i).getCell(j).value;
                         let posObj = {
-                            "i": i,
+                            "i": pos.rowId,
                             "j": j
                         }
                         return posObj;
@@ -115,7 +196,7 @@ async function main() {
             row.getCell(1).value = await changeToLowerCase(newDbWorksheet.getRow(i).getCell(1).value);
             row.commit();
         }
-        await newDb.csv.writeFile("test_db.csv");
+        await newDb.csv.writeFile(newDbFile);
     }
 
     async function changeEntireOldDatasetIntoLowerCase() {
@@ -124,8 +205,17 @@ async function main() {
             row.getCell(1).value = await changeToLowerCase(orgDbWorksheet.getRow(i).getCell(1).value);
             row.commit();
         }
-        await newDb.csv.writeFile("test.csv");
+        await newDb.csv.writeFile(orgDbFile);
     }
+
+    await cleanOldData();
+    await cleanNewData();
+    await oldDbColumns();
+    await oldDbRows();
+    await newDbColumns();
+    await newDbRows();
+    await checkForNewColumns();
+    await checkForNewRows();
 
     for (let i = 2; i < rowsInOldDbFile; i++) {
         skuRow = orgDbWorksheet.getRow(i).getCell(1).value;
@@ -136,26 +226,25 @@ async function main() {
                 let cdColumn = orgDbWorksheet.getRow(1).getCell(j).value;
                 let cdAvailable = await checkCd(cdColumn);
                 if (cdAvailable) {
-                    console.log(`${i} ${j}`);
                     let posInNewDb = await findNewCellPosition(skuRow, cdColumn);
                     let valueInCell = posInNewDb;
                     newObj = {
-                        "rowId": i,
-                        "columnId": j,
-                        "rowValue": await changeToLowerCase(skuRow),
-                        "columnValue": cdColumn,
-                        "valueInCell": valueInCell
+                        rowId: i,
+                        columnId: j,
+                        rowValue: await changeToLowerCase(skuRow),
+                        columnValue: cdColumn,
+                        valueInCell: valueInCell
                     };
-                    console.log(newObj);
+                    // console.log(newObj);
                     await findOldCellPosition(newObj);
                 }
             }
         }
     }
 
-    await orgDb.csv.writeFile("test.csv");
-    await newDb.csv.writeFile("test_db.csv");
-
+    console.log('Done!');
+    await orgDb.csv.writeFile(orgDbFile);
+    await newDb.csv.writeFile(newDbFile);
     return;
 }
 
