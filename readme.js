@@ -41,6 +41,18 @@ Header format for the excel sheets
 
 ==============================================================================
 
+Change sku_id in sku_details to lower case => skuDetailsToLowercase.js
+----------------------------------------------------------------------
+
+** This is used to change all the sku_id in the sku_details table into
+   lowercase.
+
+** Please use this whenever a new product is getting added in sku_details
+   table and make sure that it follows the correct format of naming the 
+   sku_id
+
+==============================================================================
+
 Feature Updates
 ---------------
 
@@ -51,6 +63,17 @@ Feature Updates
    Merge the files with new cd and products
    Format the sku_id into the desired format that has to be present
    New cd and products will be automatically updated in the main_db sheet
+
+** v3.0
+   Option added to change the sku_id in sku_details file also into the 
+   lower case for following the same format across all the db
+
+==============================================================================
+
+***IMPORTANT NOTE***
+
+PLEASE MAKE SURE THAT THE SKU_ID IN ALL THREE TABLES ARE IN THE SAME 
+FORMAT (LOWER CASE). PLEASE FOLLOW ALL THE ABOVE STEPS TO ACHIVE THAT
 
 ==============================================================================
 

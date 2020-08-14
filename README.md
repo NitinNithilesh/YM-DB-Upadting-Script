@@ -51,3 +51,7 @@ $ node merge.js
 **More Reference**
 
 > Please refer the file "readme.js" for more details on the internal functions
+
+**Important Note**
+
+> PLEASE MAKE SURE THAT ALL THE FILES (sku_details, sku_stock, sku_price) AND DATAS ARE IN CORRECT FORMAT BEFORE UPLOADING. FOLLOW THE INSTRUCTIONS IN "readme.js" TO ACHIVE THAT
