@@ -16,7 +16,7 @@ $ npm install
 
 **Packages to Install**
 
-> Install the following packages after setting-up the node environment 
+> Install the following packages after setting-up the node environment
 
 ```shell
 $ npm i exceljs
@@ -54,4 +54,4 @@ $ node merge.js
 
 **Important Note**
 
-> PLEASE MAKE SURE THAT ALL THE FILES (sku_details, sku_stock, sku_price) AND DATAS ARE IN CORRECT FORMAT BEFORE UPLOADING. FOLLOW THE INSTRUCTIONS IN "readme.js" TO ACHIVE THAT
+> Please make sure that all the files (sku_details, sku_stock, sku_price) and datas are in correct format before uploading. Follow the instructions in "readme.js" ti achive that
