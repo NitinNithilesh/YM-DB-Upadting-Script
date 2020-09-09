@@ -14,8 +14,8 @@ async function main() {
 
     // let rowsInOldDbFile = 162 + 1;
     // let columnsInOldDbFile = 137 + 1;
-    // let rowsInNewDbFile = 17 + 1;
-    // let columnsInNewDbFile = 8 + 1;
+    // let rowsInNewDbFile = 15 + 1;
+    // let columnsInNewDbFile = 13 + 1;
 
     let skuRow;
     let oldDbColumnsArray = [];
@@ -171,7 +171,7 @@ async function main() {
 
     async function findCellPositionInNewDb(sskuRow, ccdColumn) {
         for (let i = 2; i < rowsInNewDbFile; i++) {
-            skuRow = orgDbWorksheet.getRow(i).getCell(1).value;
+            skuRow = newDbWorksheet.getRow(i).getCell(1).value;
             skuRow = await changeToLowerCase(skuRow);
             if (skuRow == sskuRow) {
                 for (let j = 4; j < columnsInNewDbFile; j++) {
@@ -242,7 +242,7 @@ async function main() {
         }
     }
 
-    console.log('Done!');
+    console.log('Done!\nmain_db.csv is updated with the new datas');
     await orgDb.csv.writeFile(orgDbFile);
     await newDb.csv.writeFile(newDbFile);
     return;
